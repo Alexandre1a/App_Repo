@@ -1,5 +1,6 @@
 import json
 import requests
+import os
 
 # Définition du chemin du fichier JSON local
 fichier_local = "manifest_OLD.json"
@@ -26,9 +27,13 @@ if response.status_code == 200:
     # Comparaison des versions
     if version_telechargee > version_locale:
         print("+")
+        os.remove("manifest_OLD.json")
+        os.rename("manifest.json", "manifest_OLD.json")
     elif version_telechargee < version_locale:
         print("-")
     else:
         print("=")
+        os.remove("manifest_OLD.json")
+        os.rename("manifest.json", "manifest_OLD.json")
 else:
     print("Erreur lors du téléchargement du fichier JSON distant")
