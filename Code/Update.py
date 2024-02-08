@@ -5,7 +5,7 @@ import requests
 fichier_local = "manifest_OLD.json"
 
 # Téléchargement du fichier JSON distant
-url_fichier_json = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Test/Update/manifest.json?token=GHSAT0AAAAAACN52LZKW2WLYG2EN6EJRAUMZOD6SMQ"
+url_fichier_json = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Test/manifest.json"
 response = requests.get(url_fichier_json)
 
 # Si le téléchargement du fichier distant est OK
