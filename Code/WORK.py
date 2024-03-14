@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-# from Update import * # Pour importer la fonction de MAJ. ATTENTION : Si importé tel quel, lancera le processus de vérification JSON automatiquement au démarage !
+from Update import * # Pour importer la fonction de MAJ. ATTENTION : Si importé tel quel, lancera le processus de vérification JSON automatiquement au démarage !
+from lib import *
+
 
 class Application(tk.Tk):
     def __init__(self):
@@ -9,6 +11,7 @@ class Application(tk.Tk):
         self.title("Alexandre_1a's LAUNCHER") # Définit la taille et le nom de l'app
         self.geometry("600x500")
         self.resizable(width=0,height=0) # size change Not allowed 
+        self.configure(bg='red')
 
         self.notebook = ttk.Notebook(self) # Permet de définir le fait qu'il y ait des onglets
         self.notebook.pack(fill=tk.BOTH, expand=True)
@@ -22,6 +25,11 @@ class Application(tk.Tk):
         self.notebook.add(self.page2, text="Paramètres")
         self.notebook.add(self.page3, text="Updates")
         self.notebook.add(self.page4, text="About")
+
+
+    if manifest=="=" :
+        print("Update Available")
+        popupmsg("A new update is available, go to the update page to get the new version !")
 '''
         self.key_to_bind = "u" # Important : permet de changer le keybind par défaut
         self.bind(f"<KeyPress-{self.key_to_bind}>", self.page2.show_updates)  # Associe la touche définie par la variable à la fonction show_credits
