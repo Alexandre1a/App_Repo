@@ -4,77 +4,77 @@ import os
 import os.path
 from urllib import request
 
-# Définition de la variable
+# Defines the variable
 manifest=str("-")
-# Définition du chemin du fichier JSON local
-fichier_local = "manifest_current.json"
+# Defines the path of the local JSON file
+local_file = "manifest_current.json"
 
 def File_Download():   
-    # Téléchargement du fichier JSON distant
-    url_fichier_json = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
-    response = requests.get(url_fichier_json)
-    print("Fichier téléchargé !")
-    # Décodage du fichier JSON distant
-    contenu_json_distant = json.loads(response.content)
-    with open("manifest.json", "wb") as fichier:
-        fichier.write(response.content)
-        print("Fichier écrit !")
+    # Downloads the JSON file from internet
+    json_file_URL = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
+    response = requests.get(json_file_URL)
+    print("File downloaded !")
+    # Decodes the distant JSON file
+    distant_json_content = json.loads(response.content)
+    with open("manifest.json", "wb") as file:
+        file.write(response.content)
+        print("File written !")
 
 def internet_on():
     try:
         request.urlopen('https://google.com', timeout=10)
         return True
-        print("Internet ok ! (en principe)")
+        print("Internet is ok !")
     except request.URLError as err: 
         return False
-        print("Connection échouée !")
+        print("Connection failed !")
 
 def Check_Changes():
-    # Si le téléchargement du fichier distant est OK
+    # If the download of the distant JSON file is OK
     if internet_on()==True:
-        # Lecture du fichier JSON local
-        with open(fichier_local, "r") as fichier:
-            contenu_json_local = json.load(fichier)
-            print("Fichier lu !")
+        # Reads the local JSON
+        with open(local_file, "r") as file:
+            local_json_content = json.load(file)
+            print("File readed !")
 
-        # Extraction des versions + Définition de là où est le fichier distant
-        url_fichier_json = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
-        response = requests.get(url_fichier_json)
-        contenu_json_distant = json.loads(response.content)
-        version_telechargee = contenu_json_distant["version"]
-        version_locale = contenu_json_local["version"]
-        print("Versions extraites des JSON !")
+        # Extracts the versions + Defines where the distant JSON file is
+        json_file_URL = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
+        response = requests.get(json_file_URL)
+        distant_json_content = json.loads(response.content)
+        downloaded_version = distant_json_content["version"]
+        local_version = local_json_content["version"]
+        print("Versions extracted from the JSON file !")
        
         # Comparaison des versions
-        if version_telechargee > version_locale:
+        if downloaded_version > local_version:
             print("+")
             manifest="+"
-        elif version_telechargee < version_locale:
+        elif downloaded_version < local_version:
             print("-")
             manifest="-"
         else:
             print("=")
             manifest="="
-        print("Fichiers comparés !")
+        print("Files compared !")
     else:
-        print("Erreur lors de la comparaison des version ! (Erreur inconue !)")
+        print("Error while comparing versions !")
 
 
 def Update():
     if os.path.isfile("manifest.json"):
-        print("Fichier présent !")
+        print("File exists !")
         Check_Changes()
         if manifest== "+":
             print("Update Available, starting the upgrade process !")
-            
+
         # Removes the old manifest and rename the new one for the next update 
         os.remove("manifest_current.json")
         os.rename("manifest.json", "manifest_current.json")
     else:
-        print("Fichier non présent donc téléchargé !")
+        print("File was mission so I downloaded it !")
         File_Download()
 
-Update()
+# Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
 '''
 if Update()==False:
     Update()
