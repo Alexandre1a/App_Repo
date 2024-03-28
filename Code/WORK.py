@@ -10,7 +10,7 @@ NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
 
 def thread_it(self, func):
-    self.myThread = threading.Thread(target=func, args=args)
+    self.myThread = threading.Thread(target=func)
     self.myThread .setDaemon(True)  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
     self.myThread .start()
 
@@ -142,7 +142,7 @@ class UpdatePage(tk.Frame):
         label = tk.Label(self, text="Update page")
         label.pack(padx=10, pady=10)
 
-        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(Update))
+        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(self, func=Update))
         button_top.pack(side=tk.TOP, pady=10)
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application)
