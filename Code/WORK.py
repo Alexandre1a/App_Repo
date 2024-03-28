@@ -142,7 +142,7 @@ class UpdatePage(tk.Frame):
         label = tk.Label(self, text="Update page")
         label.pack(padx=10, pady=10)
 
-        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(Update)
+        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(Update))
         button_top.pack(side=tk.TOP, pady=10)
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application)

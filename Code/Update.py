@@ -110,7 +110,7 @@ def Update():
         time.sleep(2)
         Update()
 
-Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
+# Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
 
 '''
 if Update()==False:
