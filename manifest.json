@@ -1,0 +1,17 @@
+{
+    "version": "0.2.3a",
+    "files": [
+        {
+            "name": "WORK.py",
+            "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/WORK.py"
+        },
+        {
+            "name": "Update.py",
+            "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/Update.py"
+        },
+        {
+            "name": "lib.py",
+            "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/lib.py"
+        }
+    ]
+}
