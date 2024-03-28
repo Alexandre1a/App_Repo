@@ -1,7 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
 from Update import *
-from lib import *
+from lib import * # <---- à déplacer après l'initialisation ou le multithreader
+
+
+
+LARGE_FONT= ("Verdana", 12)
+NORM_FONT = ("Helvetica", 10)
+SMALL_FONT = ("Helvetica", 8)
+
+def thread_it(self, func):
+    self.myThread = threading.Thread(target=func, args=args)
+    self.myThread .setDaemon(True)  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
+    self.myThread .start()
 
 class Application(tk.Tk):
     def __init__(self):
@@ -25,6 +36,9 @@ class Application(tk.Tk):
         self.notebook.add(self.page2, text="Settings")
         self.notebook.add(self.page3, text="Updates")
         self.notebook.add(self.page4, text="About")
+    
+    
+    
 
 
 '''
@@ -41,6 +55,7 @@ class MainMenu(tk.Frame): # Displays the main menu
 
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
         button_middle.pack(side=tk.TOP, pady=20)
+
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application) # Permet de faire un boutton quitter ( à incorporer partout !)
         button_bottom.pack(side=tk.BOTTOM, pady=10)
@@ -126,6 +141,9 @@ class UpdatePage(tk.Frame):
 
         label = tk.Label(self, text="Update page")
         label.pack(padx=10, pady=10)
+
+        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(Update)
+        button_top.pack(side=tk.TOP, pady=10)
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application)
         button_bottom.pack(side=tk.BOTTOM, pady=10)

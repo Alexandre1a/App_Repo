@@ -3,9 +3,11 @@ import requests
 import os
 import os.path
 from urllib import request
-
+import time
+'''
 # Defines the variable
 manifest=str("-")
+'''
 # Defines the path of the local JSON file
 local_file = "manifest_current.json"
 
@@ -48,33 +50,68 @@ def Check_Changes():
         # Comparaison des versions
         if downloaded_version > local_version:
             print("+")
-            manifest="+"
+            return str("+")
         elif downloaded_version < local_version:
             print("-")
-            manifest="-"
+            return str("-")
         else:
             print("=")
-            manifest="="
+            return str("=")
         print("Files compared !")
     else:
-        print("Error while comparing versions !")
+        if internet_on()==False:
+            print("Uh oh, your computer is offline or google.com is unreachable, check your internet connection !")
+        else:
+            print("Error while comparing versions !")
 
 
 def Update():
     if os.path.isfile("manifest.json"):
         print("File exists !")
-        Check_Changes()
-        if manifest== "+":
+        result = Check_Changes()
+        if result == str("+"):
             print("Update Available, starting the upgrade process !")
-
+            with open("manifest.json", "r") as f:
+                # Charger le contenu du fichier JSON dans une variable
+                data = json.load(f)
+            # Obtenir la liste des fichiers à télécharger depuis le fichier JSON
+            files = data["files"]
+            # Créer une liste vide pour contenir les liens
+            names = []
+            # Parcourir la liste des fichiers
+            for fichier in files:
+                # Récupérer le lien depuis le fichier
+                lien = fichier["link"]
+                nom_fichier = fichier["name"]
+                # Ajouter les liens à la liste
+                names.append(nom_fichier)
+            # Télécharge les fichiers
+            for i in range(len(files)):
+                # Télécharge le fichier
+                response = requests.get(files[i]["link"])
+                if response.status_code == 200:
+                    # File is ok
+                    # Save the actual file
+                    with open(names[i],"wb") as f:
+                        f.write(response.content)
+                    print(f"Le fichier {names[i]}")
+        elif result == "=":
+            print("You have a up to date manifest !")
+        else :
+            print("Seems you are a version ahead from the Release, please report this with a Github issue") 
         # Removes the old manifest and rename the new one for the next update 
         os.remove("manifest_current.json")
-        os.rename("manifest.json", "manifest_current.json")
+        os.rename("manifest.json", "manifest_current.json")  
     else:
         print("File was mission so I downloaded it !")
         File_Download()
+        time.sleep(5)
+        print("Relaunching the fonction after downloading the file")
+        time.sleep(2)
+        Update()
 
-# Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
+Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
+
 '''
 if Update()==False:
     Update()
