@@ -7,7 +7,7 @@ from lib import *
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
-
+result = Check_Changes()
 
 class Application(tk.Tk):
     def __init__(self):
@@ -16,7 +16,7 @@ class Application(tk.Tk):
         self.title("Alexandre_1a's LAUNCHER") # Defines the size and the name of the app
         self.geometry("600x500")
         self.resizable(width=0,height=0) # Blocks the size change
-        self.configure(bg='white')
+        self.configure(bg='red')
         self.geometry("400x500")
 
         self.notebook = ttk.Notebook(self) # Alows the apps to have tabs
@@ -149,14 +149,20 @@ class UpdatePage(tk.Frame):
 
     def thread_it(self, func):
         self.myThread = threading.Thread(target=func)
-        self.myThread .setDaemon(True)  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
+        self.myThread.daemon = True  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
         self.myThread .start()
     
     def Threaded_Update(self):
         self.button_Update.configure(state="disabled")
         Update()
         self.button_Update.configure(state="normal")
-        self.label_Info.configure(text="Update Finished ! Relauch the app to aply changes !")
+        if result == str("+") :
+            self.label_Info.configure(text="Update Finished ! Relauch the app to aply changes !")
+        elif result == str("="):
+            self.label_Info.configure(text="You already have the lastet version !")
+        else:
+            self.label_Info.configure(text="Uh oh !")
+
 
     def show_main_menu(self):
         app.notebook.select(0)  # Sélectionne la page du menu principal
