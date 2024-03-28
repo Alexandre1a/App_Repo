@@ -9,7 +9,7 @@ import time
 manifest=str("-")
 '''
 # Defines the path of the local JSON file
-local_file = "manifest_current.json"
+local_file = "./manifest_current.json"
 
 def File_Download():   
     # Downloads the JSON file from internet
@@ -66,7 +66,7 @@ def Check_Changes():
 
 
 def Update():
-    if os.path.isfile("manifest.json"):
+    if os.path.isfile("./manifest.json"):
         print("File exists !")
         result = Check_Changes()
         if result == str("+"):
@@ -100,8 +100,8 @@ def Update():
         else :
             print("Seems you are a version ahead from the Release, please report this with a Github issue") 
         # Removes the old manifest and rename the new one for the next update 
-        os.remove("manifest_current.json")
-        os.rename("manifest.json", "manifest_current.json")  
+        os.remove("./manifest_current.json")
+        os.rename("./manifest.json", "./manifest_current.json")  
     else:
         print("File was mission so I downloaded it !")
         File_Download()
