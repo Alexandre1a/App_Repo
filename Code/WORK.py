@@ -1,18 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
 from Update import *
-from lib import * # <---- à déplacer après l'initialisation ou le multithreader
-
+from lib import *
 
 
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
 
-def thread_it(self, func):
-    self.myThread = threading.Thread(target=func)
-    self.myThread .setDaemon(True)  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
-    self.myThread .start()
 
 class Application(tk.Tk):
     def __init__(self):
@@ -36,11 +31,6 @@ class Application(tk.Tk):
         self.notebook.add(self.page2, text="Settings")
         self.notebook.add(self.page3, text="Updates")
         self.notebook.add(self.page4, text="About")
-    
-    
-    
-
-
 '''
         self.key_to_bind = "u" # Important : Changes the default keybind
         self.bind(f"<KeyPress-{self.key_to_bind}>", self.page2.show_updates)  # Binds the key to the fonction to show credits
@@ -139,11 +129,14 @@ class UpdatePage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        label = tk.Label(self, text="Update page")
-        label.pack(padx=10, pady=10)
+        self.label_Titre = tk.Label(self, text="Update page")
+        self.label_Titre.pack(padx=10, pady=10)
 
-        button_top = tk.Button(self, text="Update !", command=lambda: thread_it(self, func=Update))
-        button_top.pack(side=tk.TOP, pady=10)
+        self.button_Update = tk.Button(self, text="Update !", state="normal" , command=lambda: self.thread_it(self, func=self.Threaded_Update))
+        self.button_Update.pack(side=tk.TOP, pady=10)
+
+        self.label_Info = tk.Label(self,text="")
+        self.label_Info.pack(padx=10, pady=10)
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application)
         button_bottom.pack(side=tk.BOTTOM, pady=10)
@@ -154,6 +147,16 @@ class UpdatePage(tk.Frame):
         button_middle = tk.Button(self, text="Go to main menu", command=self.show_main_menu)
         button_middle.pack(side=tk.BOTTOM, pady=10)
 
+    def thread_it(self, func):
+        self.myThread = threading.Thread(target=func)
+        self.myThread .setDaemon(True)  # When the main thread exits, the sub-threads exit directly after it, regardless of whether they finish running or not.
+        self.myThread .start()
+    
+    def Threaded_Update(self):
+        self.button_Update.configure(state="disabled")
+        Update()
+        self.button_Update.configure(state="normal")
+        self.label_Info.configure(text="Update Finished ! Relauch the app to aply changes !")
 
     def show_main_menu(self):
         app.notebook.select(0)  # Sélectionne la page du menu principal
