@@ -132,7 +132,7 @@ class UpdatePage(tk.Frame):
         self.label_Titre = tk.Label(self, text="Update page")
         self.label_Titre.pack(padx=10, pady=10)
 
-        self.button_Update = tk.Button(self, text="Update !", state="normal" , command=lambda: self.thread_it(self, func=self.Threaded_Update))
+        self.button_Update = tk.Button(self, text="Update !", state="normal" , command=lambda: self.thread_it(func=self.Threaded_Update))
         self.button_Update.pack(side=tk.TOP, pady=10)
 
         self.label_Info = tk.Label(self,text="")
