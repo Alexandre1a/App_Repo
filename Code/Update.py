@@ -3,6 +3,7 @@ import requests
 import os
 import os.path
 from urllib import request
+import time
 '''
 # Defines the variable
 manifest=str("-")
@@ -104,7 +105,9 @@ def Update():
     else:
         print("File was mission so I downloaded it !")
         File_Download()
+        time.sleep(5)
         print("Relaunching the fonction after downloading the file")
+        time.sleep(2)
         Update()
 
 Update() # Uncomment this to test the program and comment it if you are testing the WORK.py
