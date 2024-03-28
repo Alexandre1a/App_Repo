@@ -3,6 +3,10 @@ from tkinter import ttk
 from Update import *
 from lib import *
 
+with open("manifest_current.json", "r") as f:
+    data = json.load(f)
+
+version = data["version"]
 
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
@@ -16,7 +20,6 @@ class Application(tk.Tk):
         self.title("Alexandre_1a's LAUNCHER") # Defines the size and the name of the app
         self.geometry("600x500")
         self.resizable(width=0,height=0) # Blocks the size change
-        self.configure(bg='red')
         self.geometry("400x500")
 
         self.notebook = ttk.Notebook(self) # Alows the apps to have tabs
@@ -43,9 +46,11 @@ class MainMenu(tk.Frame): # Displays the main menu
         label = tk.Label(self, text="Welcome to the main menu !")
         label.pack(padx=10, pady=10)
 
+        self.version = tk.Label(self,text=f"Version  {version}")
+        self.version.pack(anchor="n")
+
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
         button_middle.pack(side=tk.TOP, pady=20)
-
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application) # Permet de faire un boutton quitter ( à incorporer partout !)
         button_bottom.pack(side=tk.BOTTOM, pady=10)
