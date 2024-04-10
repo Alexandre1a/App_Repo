@@ -11,7 +11,7 @@ version = data["version"]
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)
 SMALL_FONT = ("Helvetica", 8)
-result = Check_Changes()
+
 
 class Application(tk.Tk):
     def __init__(self):
@@ -46,8 +46,11 @@ class MainMenu(tk.Frame): # Displays the main menu
         label = tk.Label(self, text="Welcome to the main menu !")
         label.pack(padx=10, pady=10)
 
-        self.version = tk.Label(self,text=f"Version  {version}")
-        self.version.pack(anchor="n")
+        self.Info_label = tk.Label(self,text="Hey ! You should check the Update page !")
+        self.Info_label.pack(side=tk.TOP, pady=10)
+
+        self.Version_label = tk.Label(self,text=f"Version  {version}")
+        self.Version_label.pack(anchor="n")
 
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
         button_middle.pack(side=tk.TOP, pady=20)
@@ -57,6 +60,10 @@ class MainMenu(tk.Frame): # Displays the main menu
 
         button_bottom = tk.Button(self, text="Settings", command=self.show_settings)
         button_bottom.pack(side=tk.BOTTOM, pady=10)
+
+
+    def Test():
+        UpdatePage.thread_it
 
     def quit_application(self):
         app.destroy()
@@ -68,6 +75,8 @@ class MainMenu(tk.Frame): # Displays the main menu
     def show_settings(self): # Sélectionne la page des paramètres
         app.notebook.select(1)
         print("Settings displayed")  
+        
+
 
 class SettingsPage(tk.Frame):
     def __init__(self, parent, app_instance):
@@ -134,23 +143,26 @@ class UpdatePage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.label_Titre = tk.Label(self, text="Update page")
-        self.label_Titre.pack(padx=10, pady=10)
+        self.Title_label = tk.Label(self, text="Update page")
+        self.Title_label.pack(padx=10, pady=10)
 
-        self.button_Update = tk.Button(self, text="Update !", state="normal" , command=lambda: self.thread_it(func=self.Threaded_Update))
-        self.button_Update.pack(side=tk.TOP, pady=10)
+        self.Check_button = tk.Button(self, text="Check Updates !", state="normal", command=lambda: self.thread_it(func=self.Check))
+        self.Check_button.pack(padx=10, pady=10)
 
-        self.label_Info = tk.Label(self,text="")
-        self.label_Info.pack(padx=10, pady=10)
+        self.Update_button = tk.Button(self, text="Update !", state="disable" , command=lambda: self.thread_it(func=self.Threaded_Update))
+        self.Update_button.pack(side=tk.TOP, pady=10)
 
-        button_bottom = tk.Button(self, text="Close", command=self.quit_application)
-        button_bottom.pack(side=tk.BOTTOM, pady=10)
+        self.Info_label = tk.Label(self,text="")
+        self.Info_label.pack(padx=10, pady=10)
 
-        button_bottom = tk.Button(self, text="About", command=self.show_about)
-        button_bottom.pack(side=tk.BOTTOM, pady=10)
+        self.Close_button = tk.Button(self, text="Close", command=self.quit_application)
+        self.Close_button.pack(side=tk.BOTTOM, pady=10)
 
-        button_middle = tk.Button(self, text="Go to main menu", command=self.show_main_menu)
-        button_middle.pack(side=tk.BOTTOM, pady=10)
+        self.About_button = tk.Button(self, text="About", command=self.show_about)
+        self.About_button.pack(side=tk.BOTTOM, pady=10)
+
+        self.Menu_button = tk.Button(self, text="Go to main menu", command=self.show_main_menu)
+        self.Menu_button.pack(side=tk.BOTTOM, pady=10)
 
     def thread_it(self, func):
         self.myThread = threading.Thread(target=func)
@@ -158,15 +170,32 @@ class UpdatePage(tk.Frame):
         self.myThread .start()
     
     def Threaded_Update(self):
-        self.button_Update.configure(state="disabled")
+        self.Update_button.configure(state="disabled")
         Update()
-        self.button_Update.configure(state="normal")
+        result = Check_Changes()
+        self.Update_button.configure(state="normal")
         if result == str("+") :
-            self.label_Info.configure(text="Update Finished ! Relauch the app to aply changes !")
+            self.Info_label.configure(text="Update Finished ! Relauch the app to aply changes !")
         elif result == str("="):
-            self.label_Info.configure(text="You already have the lastet version !")
+            self.Info_label.configure(text="You already have the lastet version !")
         else:
-            self.label_Info.configure(text="Uh oh !")
+            self.Info_label.configure(text="Uh oh !")
+
+    def Check(self):
+        self.Check_button.configure(state="disabled")
+        result = Check_Changes()
+        self.Update_button.configure(state="normal")
+        if result == str("+") :
+            self.Info_label.configure(text="Update available !")
+        elif result == str("="):
+            self.Info_label.configure(text="No update Available")
+        else:
+            if internet_on() == False:
+                self.Info_label.configure(text="Uh oh ! You have no internet ! Updates disabled")
+                self.Update_button.configure(state="disabled")
+            else :
+                self.Info_label.configure(text="Fatal error !")
+
 
 
     def show_main_menu(self):
@@ -213,6 +242,7 @@ class AboutPage(tk.Frame):
 
     def quit_application(self):
         app.destroy()
+
 
 if __name__ == "__main__":
     app = Application()
