@@ -18,7 +18,6 @@ class Application(tk.Tk):
         super().__init__()
 
         self.title("Alexandre_1a's LAUNCHER") # Defines the size and the name of the app
-        self.geometry("600x500")
         self.resizable(width=0,height=0) # Blocks the size change
         self.geometry("400x500")
 
