@@ -26,7 +26,7 @@ def update_countown():
     # 
 
 def play_song():
-    sound_id = play("./Musics/text.wav", async_mode=True)
+    sound_id = play("./Musics/test.wav", async_mode=True)
     try:
         sound_id = play("./Musics/text.wav", async_mode=True)
     except NavaBaseError as e:
