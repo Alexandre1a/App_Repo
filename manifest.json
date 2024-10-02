@@ -1,5 +1,6 @@
 {
-    "files": [
+  "version": "0.5.0",  
+  "files": [
         {
             "name": "WORK.py",
             "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/WORK.py",
