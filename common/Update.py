@@ -34,7 +34,7 @@ def File_Cleaner():
 
 def JSON_dowload():
     # Dowloads the JSON file from Internet
-    json_file_URL = c
+    json_file_URL = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
     response = requests.get(json_file_URL)
     # Decodes the distant JSON file
     distant_json_content = json.load(response.content)
@@ -56,6 +56,7 @@ def File_download(url, name):
 
 
 def check_changes():
+    Dependencies()
     with open(local_file, "r") as file:
         local_json_content = json.load(file)
         print("File read")
@@ -77,10 +78,9 @@ def check_changes():
 
 def Dependencies():
     global both_file
-    if Is_File_Here(local_file) and Is_File_Here(distant_file) and internet_on() == True:
-        return True
-    elif Is_File_Here(local_file) and internet_on():
+    if Is_File_Here(local_file) and internet_on():
         File_download(distant_file_URL, "manifest.json")
+    elif Is_File_Here(local_file) and Is_File_Here(distant_file) and internet_on() == True: 
         return True
         
 
@@ -99,4 +99,5 @@ def Update():
             File_Cleaner()
         elif result == str("="):
             print("no update")
-
+        
+#Update()
