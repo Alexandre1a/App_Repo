@@ -100,5 +100,3 @@ def Update():
             File_Cleaner()
         elif result == str("="):
             print("no update")
-        
-Update()
