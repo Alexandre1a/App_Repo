@@ -176,7 +176,7 @@ class UpdatePage(tk.Frame):
         result = check_changes()
         self.Update_button.configure(state="normal")
         if result == str("+") :
-            self.Info_label.configure(text="Update Finished ! Relauch the app to aply changes !")
+            self.Info_label.configure(text="You updated but you are still behind...")
         elif result == str("="):
             self.Info_label.configure(text="You already have the lastet version !")
         else:
@@ -196,9 +196,7 @@ class UpdatePage(tk.Frame):
                 self.Update_button.configure(state="disabled")
             else :
                 self.Info_label.configure(text="Fatal error !")
-
-
-
+    
     def show_main_menu(self):
         app.notebook.select(0)  # Sélectionne la page du menu principal
         print("Main menu displayed")

@@ -80,6 +80,7 @@ def Dependencies():
     global both_file
     if Is_File_Here(local_file) and internet_on():
         File_download(distant_file_URL, "manifest.json")
+        return True
     elif Is_File_Here(local_file) and Is_File_Here(distant_file) and internet_on() == True: 
         return True
         
@@ -100,4 +101,4 @@ def Update():
         elif result == str("="):
             print("no update")
         
-#Update()
+Update()

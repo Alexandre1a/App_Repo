@@ -1,5 +1,5 @@
 {
-    "version": "0.7.4",
+    "version": "0.7.5",
     "files": [
         {
             "name": "WORK.py",
@@ -9,7 +9,7 @@
         {
             "name": "Update.py",
             "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/Update.py",
-            "version": "0.3.1"
+            "version": "0.3.3"
         },
         {
             "name": "lib.py",
