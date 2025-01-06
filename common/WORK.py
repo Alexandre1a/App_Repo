@@ -173,7 +173,7 @@ class UpdatePage(tk.Frame):
     def Threaded_Update(self):
         self.Update_button.configure(state="disabled")
         Update()
-        result = Check_Changes()
+        result = check_changes()
         self.Update_button.configure(state="normal")
         if result == str("+") :
             self.Info_label.configure(text="Update Finished ! Relauch the app to aply changes !")
@@ -184,7 +184,7 @@ class UpdatePage(tk.Frame):
 
     def Check(self):
         self.Check_button.configure(state="disabled")
-        result = Check_Changes()
+        result = check_changes()
         self.Update_button.configure(state="normal")
         if result == str("+") :
             self.Info_label.configure(text="Update available !")
