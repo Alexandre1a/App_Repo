@@ -3,10 +3,12 @@ import requests
 import os
 import os.path
 from urllib import request
+import time
 
 # Defines the path of the local JSON File
 local_file = "./manifest_current.json"
 distant_file = "./manifest.json"
+distant_file_URL = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
 both_file = False
 
 def internet_on():
@@ -19,18 +21,20 @@ def internet_on():
         return False
 
 def Is_File_Here(file):
-    if os.path.isfile(file):
-        return True
-    if not os.path.isfile(file):
+    try:
+        if os.path.isfile(file):
+            return True
+    except AttributeError:
+        print("File missing")
         return False
-
+        
 def File_Cleaner():
     os.remove(local_file)
     os.rename(distant_file, local_file)
 
 def JSON_dowload():
     # Dowloads the JSON file from Internet
-    json_file_URL = "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/manifest.json"
+    json_file_URL = c
     response = requests.get(json_file_URL)
     # Decodes the distant JSON file
     distant_json_content = json.load(response.content)
@@ -73,11 +77,12 @@ def check_changes():
 
 def Dependencies():
     global both_file
-    if Is_File_Here(local_file) and Is_File_Here(distant_file) == True:
-        both_file = True
-        print("both files")
-    if both_file and internet_on() == True:
+    if Is_File_Here(local_file) and Is_File_Here(distant_file) and internet_on() == True:
         return True
+    elif Is_File_Here(local_file) and internet_on():
+        File_download(distant_file_URL, "manifest.json")
+        return True
+        
 
 def Update():
     if Dependencies() == True:
@@ -92,5 +97,6 @@ def Update():
                 name = fichier["name"]
                 File_download(URL, name)
             File_Cleaner()
-    else:
-        print("error")
+        elif result == str("="):
+            print("no update")
+
