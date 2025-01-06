@@ -48,7 +48,7 @@ class MainMenu(tk.Frame): # Displays the main menu
         self.Info_label = tk.Label(self,text="Hey ! You should check the Update page !")
         self.Info_label.pack(side=tk.TOP, pady=10)
 
-        self.Version_label = tk.Label(self,text=f"Version  {version}")
+        self.Version_label = tk.Label(self,text=f"Version : {version} Generix Release")
         self.Version_label.pack(anchor="n")
 
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
@@ -224,7 +224,7 @@ class AboutPage(tk.Frame):
         label = tk.Label(self, text="Made by: Alexandre_1a")
         label.pack(side=tk.TOP, pady=1)
 
-        label = tk.Label(self, text="2023-2024 Alexandre_1a")
+        label = tk.Label(self, text="2023-2025 Alexandre_1a")
         label.pack(side=tk.TOP, pady=1)
 
         label = tk.Label(self, text="Made With Python (Tkinter) and developed on Linux !")

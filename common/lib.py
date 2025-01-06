@@ -1,7 +1,7 @@
 # Usefull libs !
 import tkinter as tk
 from tkinter import ttk
-from Update import Check_Changes
+# from Update import Check_Changes
 import threading
 
 LARGE_FONT= ("Verdana", 12)

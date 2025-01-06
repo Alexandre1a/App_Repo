@@ -7,11 +7,6 @@
             "version": "0.4.2"
         },
         {
-            "name": "Update.py",
-            "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/Update.py",
-            "version": "0.2.0"
-        },
-        {
             "name": "lib.py",
             "link": "https://raw.githubusercontent.com/Alexandre1a/App_Repo/Production/Code/lib.py",
             "version": "0.1.0"
