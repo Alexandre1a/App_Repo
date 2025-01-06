@@ -48,7 +48,7 @@ class MainMenu(tk.Frame): # Displays the main menu
         self.Info_label = tk.Label(self,text="Hey ! You should check the Update page !")
         self.Info_label.pack(side=tk.TOP, pady=10)
 
-        self.Version_label = tk.Label(self,text=f"Version : {version} Generix Release")
+        self.Version_label = tk.Label(self,text=f"Version : {version} Generic Release")
         self.Version_label.pack(anchor="n")
 
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
