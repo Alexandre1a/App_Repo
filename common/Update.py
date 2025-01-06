@@ -30,7 +30,7 @@ def Is_File_Here(file):
         
 def File_Cleaner():
     os.remove(local_file)
-    os.rename(distant_file, local_file)
+    os.rename(distant_file, "manifest_current.json")
 
 def JSON_dowload():
     # Dowloads the JSON file from Internet

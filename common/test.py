@@ -5,6 +5,11 @@ import os.path
 from urllib import request
 import time
 
+local_file = "./test1.json"
+distant_file = "./test2.json"
+
+a=0
+
 def File_download(url, name):
     response = requests.get(url)
     '''
@@ -15,8 +20,15 @@ def File_download(url, name):
         with open(name, "wb") as file:
             file.write(response.content)
         print(f"Le fichier {name}")
-        
-choice = str(input("Entrez L'URL "))
-nom = str(input("Choisisez le nom "))
 
-File_download(choice, nom)    
+def File_Cleaner():
+    os.remove(local_file)
+    os.rename(distant_file, local_file)
+
+while a < 2:
+    choice = str(input("Entrez L'URL "))
+    nom = str(input("Choisisez le nom "))
+    File_download(choice, nom)
+    a= a+1
+
+File_Cleaner()
