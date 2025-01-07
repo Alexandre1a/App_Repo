@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+import threading
 from Update import *
-from lib import *
+# from lib import popupmsg
+import nava
 
 with open("manifest_current.json", "r") as f:
     data = json.load(f)
@@ -53,6 +55,11 @@ class MainMenu(tk.Frame): # Displays the main menu
 
         button_middle = tk.Button(self, text="Test !", command=self.play_game)
         button_middle.pack(side=tk.TOP, pady=20)
+
+        if internet_on() == False:
+            self.Info_label.configure(text="No internet connection available")
+            self.Verify_button = tk.Button(self, text="Check Again", command=internet_on())
+            self.Verify_button.pack(side=tk.TOP, pady= 30)
 
         button_bottom = tk.Button(self, text="Close", command=self.quit_application) # Permet de faire un boutton quitter ( à incorporer partout !)
         button_bottom.pack(side=tk.BOTTOM, pady=10)
@@ -179,6 +186,7 @@ class UpdatePage(tk.Frame):
             self.Info_label.configure(text="You updated but you are still behind...")
         elif result == str("="):
             self.Info_label.configure(text="You already have the lastet version !")
+            popupmsg("Update Finished")
         else:
             self.Info_label.configure(text="Uh oh !")
 
@@ -190,13 +198,20 @@ class UpdatePage(tk.Frame):
             self.Info_label.configure(text="Update available !")
         elif result == str("="):
             self.Info_label.configure(text="No update Available")
+            self.Check_button.configure(state="normal")
+            self.Update_button.configure(state="disabled")
+        elif result == str("-"):
+            self.Info_label.configure(text="Dev mode enabled")
+            self.Check_button.configure(state="disabled")
+            self.Update_button.configure(state="disabled")
         else:
             if internet_on() == False:
                 self.Info_label.configure(text="Uh oh ! You have no internet ! Updates disabled")
                 self.Update_button.configure(state="disabled")
+                self.Check_button.configure(state="normal")
             else :
                 self.Info_label.configure(text="Fatal error !")
-    
+
     def show_main_menu(self):
         app.notebook.select(0)  # Sélectionne la page du menu principal
         print("Main menu displayed")
